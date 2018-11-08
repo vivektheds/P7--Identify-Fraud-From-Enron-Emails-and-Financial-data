@@ -466,7 +466,7 @@ In the process of outlier investigation I have identified below three outliers w
 # Import plotly 
 import plotly
 from plotly import tools
-plotly.tools.set_credentials_file(username='vivektheds', api_key='YobnbIPE6Lwvzb6emY51')
+plotly.tools.set_credentials_file(username='*******', api_key='**********************')
 
 ```
 
