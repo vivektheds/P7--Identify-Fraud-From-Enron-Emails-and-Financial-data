@@ -33,7 +33,7 @@ import numpy as np
 
 import sys
 import pickle
-sys.path.append("C:/Users/Vivek/ud120-projects-master_Final_Vivek/ud120-projects-master/tools/")
+sys.path.append("../tools/")
 
 
 from feature_format import featureFormat, targetFeatureSplit
@@ -44,7 +44,7 @@ from sklearn.cross_validation import train_test_split
 from sklearn.grid_search import GridSearchCV
 from sklearn.cross_validation import StratifiedShuffleSplit
 
-Enron_dictionary = pickle.load( open("C:/Users/Vivek/ud120-projects-master_Final_Vivek/ud120-projects-master/final_project/final_project_dataset.pkl", "r") )
+Enron_dictionary = pickle.load( open("final_project_dataset.pkl", "r") )
 
 ```
 
@@ -466,7 +466,7 @@ In the process of outlier investigation I have identified below three outliers w
 # Import plotly 
 import plotly
 from plotly import tools
-plotly.tools.set_credentials_file(username='vivektheds', api_key='YobnbIPE6Lwvzb6emY51')
+plotly.tools.set_credentials_file(username='********', api_key='*******************')
 
 ```
 
