@@ -104,7 +104,9 @@ features_train, features_test, labels_train, labels_test = train_test_split( fea
 
 # Provided to give you a starting point. Try a variety of classifiers.
 from sklearn import tree
-clf = tree.DecisionTreeClassifier(criterion='gini',splitter='random',min_samples_split=10,max_depth=None)
+#clf = tree.DecisionTreeClassifier(criterion='gini',splitter='random',min_samples_split=10,max_depth=None)
+clf = tree.DecisionTreeClassifier()
+
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall 
 ### using our testing script. Check the tester.py script in the final project
