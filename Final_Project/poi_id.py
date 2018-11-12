@@ -2,7 +2,7 @@
 
 import sys
 import pickle
-sys.path.append("C:/Users/Vvek/ud120-projects-master/ud120-projects-master/final_project/")
+sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
@@ -103,8 +103,8 @@ features_train, features_test, labels_train, labels_test = train_test_split( fea
 
 
 # Provided to give you a starting point. Try a variety of classifiers.
-from sklearn.svm import SVC # "Support Vector Classifier"
-clf = SVC(kernel = 'linear')
+from sklearn import tree
+clf = tree.DecisionTreeClassifier(criterion='gini',splitter='random',min_samples_split=10,max_depth=None)
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall 
 ### using our testing script. Check the tester.py script in the final project
