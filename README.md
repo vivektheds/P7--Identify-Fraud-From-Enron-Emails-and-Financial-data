@@ -812,68 +812,71 @@ y1=enron_DF['poi']
 
 Feature selection is very important aspect because all features does not equally participate in the prediction and that can add noisy data to our prediction model, so it's very important to feed right set of features which can give us better prediction results.
 
-For feature selection first I have used an extremely randomized tree classifier and in this classifier there is a featureimportances attributes that is the feature importances (the higher, the more important the feature), so using this approach I am trying to find out the no of features which I shoud use for better classification results.
+In order to find out the no of features which we should feed for classification I have used SelectKbest for this, however the challange is that we have to find out the K value which should give best performance and I have used GridSearchCV to find that best K value and below is the approach to find that value.
 
 
 ```python
-# Plot number of features VS. cross-validation scores
-import matplotlib.pyplot as plt
-from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.feature_selection import SelectKBest, f_classif
+from sklearn.cross_validation import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.preprocessing import MinMaxScaler
 
-# feature extraction
-model = ExtraTreesClassifier()
-model.fit(x1, y1)
-importances = model.feature_importances_
-std = np.std([tree.feature_importances_ for tree in model.estimators_],
-             axis=0)
-indices = np.argsort(importances)[::-1]
 
-# Print the feature ranking
-print("Feature ranking:")
+X_train1, X_test1, y_train1, y_test1 = train_test_split( x1, y1, test_size = 0.2, random_state = 0)
 
-for f in range(x1.shape[1]):
-    print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
+gnba = GaussianNB()
+steps = [
+    ('scaler', MinMaxScaler()),
+     ('best', SelectKBest(f_classif)),
+     ('gnba', gnba)]
 
-# Plot the feature importances of the forest
+pipeline = Pipeline(steps)
 
-#plt.figure(1, figsize=(14, 13))
-#plt.title("Feature importances")
-#plt.bar(range(x1.shape[1]), importances[indices],
-#       color="g", yerr=std[indices], align="center")
-#plt.xticks(range(x1.shape[1]), x1.columns[indices],rotation=90)
-#plt.xlim([-1, x1.shape[1]])
-#plt.show()
+parameters = [   
+{
+'best__k':[3]
+},
+{
+'best__k':[4]
+},
+{
+'best__k':[5]
+},
+    {
+'best__k':[6]
+},
+{
+'best__k':[7]
+},
+{
+'best__k':[8]
+}, 
+{
+'best__k':[9]
+}, 
+{
+'best__k':[10]
+},     
+]
+
+#cv = StratifiedShuffleSplit(test_size=0.2, random_state=42)
+gnbawithpca = GridSearchCV(pipeline, param_grid = parameters, scoring="f1")
+gnbawithpca.fit(X_train1,y_train1)
+
+
+# examine the best model
+print(gnbawithpca.best_score_)
+print(gnbawithpca.best_params_)
+print(gnbawithpca.best_estimator_)
 ```
 
-    Feature ranking:
-    1. feature 20 (0.118967)
-    2. feature 4 (0.104833)
-    3. feature 5 (0.097338)
-    4. feature 9 (0.074302)
-    5. feature 16 (0.071997)
-    6. feature 6 (0.069789)
-    7. feature 0 (0.060055)
-    8. feature 10 (0.047674)
-    9. feature 13 (0.045733)
-    10. feature 7 (0.045384)
-    11. feature 1 (0.043485)
-    12. feature 3 (0.038973)
-    13. feature 14 (0.036888)
-    14. feature 21 (0.035770)
-    15. feature 18 (0.026772)
-    16. feature 12 (0.023747)
-    17. feature 2 (0.018037)
-    18. feature 19 (0.016129)
-    19. feature 17 (0.014256)
-    20. feature 11 (0.009400)
-    21. feature 15 (0.000316)
-    22. feature 8 (0.000154)
+    0.340648723257
+    {'best__k': 5}
+    Pipeline(steps=[('scaler', MinMaxScaler(copy=True, feature_range=(0, 1))), ('best', SelectKBest(k=5, score_func=<function f_classif at 0x0000000008C2B908>)), ('gnba', GaussianNB(priors=None))])
     
 
-As per the above feature ranking, after 5 best features importance of features decrease. Therefore I can focus on 5 features.
-
-In order to decide the best features to use, I utilized an automated feature selection function, i.e. SelectKBest, which selects the K features that are defined by the amount of variance explained, automatically selected for use in the classifier. 
-Moreover, here I have selected K=5 which i got from the featureimportances attribute.
+As per the above GridSearchCV result the best K value is 5, hence I will be using K=5 in an automated feature selection function, i.e. SelectKBest, which selects the K features that are defined by the amount of variance explained, automatically selected for use in the classifier. 
 
 
 ```python
