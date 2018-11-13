@@ -935,6 +935,7 @@ x1.columns[test.get_support(indices=True)].tolist()
      'total_stock_value',
      'from_poi_ratio']
 
+Finally I have selected five features ('salary', 'exercised_stock_options', 'bonus', 'total_stock_value', 'from_poi_ratio') that maximized performance. 
 
 
 ### Pick an algorithm :
