@@ -13,7 +13,7 @@ This dataset contains Enron emails sent and received by Enron executives during 
 
 As Fortune named Enron "America's Most Innovative Company" for six consecutive years ,however after that Enron was declared bankrupt due to willful corporate fraud and corruption, which alarmed every company to take fraud very seriously and try to take some serious action to prevent such malicious activities within organization.
 
-So the goal of this project to build a predictive model to identify POIs with he help of Machine learning algorithms and using Enron dataset. 
+So the goal of this project to build a predictive model to identify POIs with the help of Machine learning algorithms and using Enron dataset. 
 Since this dataset also has actual POIs and using these actual values we will evaluate our predictive model.
 
 
